@@ -1,0 +1,72 @@
+<section id="projects" class="py-32 relative overflow-hidden">
+  <!-- Background Glows -->
+  <div class="absolute top-1/4 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+  <div class="absolute bottom-1/4 left-0 w-64 h-64 bg-highlight/5 rounded-full blur-3xl"></div>
+
+  <section class="container mx-auto px-6 relative z-10">
+    <!-- Section Header -->
+    <article class="text-center mx-auto max-w-3xl mb-16">
+      <span class="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">Featured Work</span>
+      <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-secondary-foreground">
+        Projects that
+        <span class="font-serif italic font-normal text-white">make an impact.</span>
+      </h2>
+      <p class="text-muted-foreground animate-fade-in animation-delay-200">
+        A selection of my recent work, from web applications to the infrastructure that keeps them running.
+      </p>
+    </article>
+
+    @if (projects.length) {
+      <!-- Projects Grid -->
+      <article class="grid md:grid-cols-2 gap-8">
+        @for (project of projects; track $index) {
+          <section class="group glass rounded-2xl overflow-hidden animate-fade-in" [style.animationDelay]="($index + 1) * 100 + 'ms'">
+            <!-- Image -->
+            <article class="relative overflow-hidden aspect-video">
+              <img [src]="project.image" [alt]="project.title" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+              <div class="absolute inset-0 bg-linear-to-t from-card via-card/50 to-transparent opacity-60"></div>
+
+              <!-- Overlay Links -->
+              <div class="absolute inset-0 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <a href="{{ project.link }}" target="_blank" aria-label="Live demo" class="p-3 rounded-full glass hover:bg-primary hover:text-primary-foreground transition-all">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+                <a href="{{ project.github }}" target="_blank" aria-label="Source code" class="p-3 rounded-full glass hover:bg-primary hover:text-primary-foreground transition-all">
+                  <i class="fa-brands fa-github"></i>
+                </a>
+              </div>
+            </article>
+
+            <!-- Content -->
+            <article class="p-6 space-y-4">
+              <div class="flex items-start justify-between">
+                <h3 class="text-xl font-semibold group-hover:text-primary transition-colors">{{ project.title }}</h3>
+                <i class="fa-solid fa-arrow-right -rotate-45 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 group-hover:-translate-y-1 transition-all"></i>
+              </div>
+              <p class="text-muted-foreground text-sm">{{ project.description }}</p>
+              <div class="flex flex-wrap gap-2">
+                @for (tag of project.tags; track $index) {
+                  <span class="px-4 py-1.5 rounded-full bg-surface text-xs font-medium border border-border/50 text-muted-foreground hover:border-primary/50 hover:text-primary transition-all duration-300">{{ tag }}</span>
+                }
+              </div>
+            </article>
+          </section>
+        }
+      </article>
+    } @else {
+      <!-- Empty State -->
+      <article class="glass rounded-2xl p-12 max-w-2xl mx-auto text-center animate-fade-in animation-delay-300">
+        <div class="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+          <i class="fa-solid fa-code text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Projects coming soon</h3>
+        <p class="text-sm text-muted-foreground">I'm preparing this section. Meanwhile, take a look at my work on GitHub.</p>
+      </article>
+    }
+
+    <!-- View All CTA -->
+    <article class="text-center mt-12 animate-fade-in animation-delay-500">
+      <app-animated-button href="https://github.com/mfigueroa23">View All Projects <i class="fa-brands fa-github"></i></app-animated-button>
+    </article>
+  </section>
+</section>

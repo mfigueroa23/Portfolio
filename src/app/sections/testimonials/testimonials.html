@@ -1,0 +1,60 @@
+<section id="testimonials" class="py-32 relative overflow-hidden">
+  <div class="absolute top-1/2 left-1/2 w-200 h-200 bg-primary/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+
+  <section class="container mx-auto px-6 relative z-10">
+    <!-- Section Header -->
+    <article class="text-center max-w-3xl mx-auto mb-16">
+      <span class="text-secondary-foreground text-sm font-medium tracking-wider uppercase animate-fade-in">What People Say</span>
+      <h2 class="text-4xl md:text-5xl font-bold mt-4 mb-6 animate-fade-in animation-delay-100 text-secondary-foreground">
+        Kind words from
+        <span class="font-serif italic font-normal text-white">amazing people.</span>
+      </h2>
+    </article>
+
+    <!-- Testimonial Carousel -->
+    <article class="max-w-4xl mx-auto">
+      @if (active(); as testimonial) {
+        <section class="relative">
+          <!-- Main Testimonial -->
+          <article class="glass p-8 rounded-3xl md:p-12 glow-border animate-fade-in animation-delay-200">
+            <div class="absolute -top-4 left-8 w-12 h-12 rounded-full bg-primary flex items-center justify-center">
+              <i class="fa-solid fa-quote-left text-xl text-primary-foreground"></i>
+            </div>
+            <blockquote class="text-xl md:text-2xl font-medium leading-relaxed mb-8 pt-4">"{{ testimonial.quote }}"</blockquote>
+            <div class="flex items-center gap-4">
+              <img [src]="testimonial.avatar" [alt]="testimonial.author" class="w-14 h-14 rounded-full object-cover ring-2 ring-primary/20" />
+              <div>
+                <p class="font-semibold">{{ testimonial.author }}</p>
+                <p class="text-sm text-muted-foreground">{{ testimonial.role }}</p>
+              </div>
+            </div>
+          </article>
+
+          <!-- Testimonials Navigation -->
+          <nav class="flex items-center justify-center gap-4 mt-8">
+            <button class="p-3 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all cursor-pointer" aria-label="Previous testimonial" (click)="previous()">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="flex gap-2">
+              @for (item of testimonials; track $index) {
+                <button class="h-2 rounded-full transition-all duration-300 cursor-pointer" [class]="$index === activeIndex() ? 'w-8 bg-primary' : 'w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50'" [attr.aria-label]="'Show testimonial ' + ($index + 1)" (click)="activeIndex.set($index)"></button>
+              }
+            </div>
+            <button class="p-3 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all cursor-pointer" aria-label="Next testimonial" (click)="next()">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </nav>
+        </section>
+      } @else {
+        <!-- Empty State -->
+        <section class="glass rounded-3xl p-12 max-w-2xl mx-auto text-center glow-border animate-fade-in animation-delay-200">
+          <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+            <i class="fa-solid fa-quote-left text-2xl text-primary"></i>
+          </div>
+          <h3 class="text-xl font-semibold mb-2">Testimonials coming soon</h3>
+          <p class="text-sm text-muted-foreground">Have we worked together? I'd love to hear your feedback.</p>
+        </section>
+      }
+    </article>
+  </section>
+</section>
