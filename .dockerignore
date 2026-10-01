@@ -1,0 +1,11 @@
+# Only dist/, nginx.conf and docker/ are needed in the build context
+.git
+.github
+.angular
+.vscode
+.vercel
+.env*
+node_modules
+coverage
+out-tsc
+*.log
