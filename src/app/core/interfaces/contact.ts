@@ -2,6 +2,8 @@ export interface ContactMessage {
   name: string;
   email: string;
   message: string;
+  /** Honeypot field; the API silently discards the message when it is not empty. */
+  website?: string;
 }
 
 export interface ApiMessage {
