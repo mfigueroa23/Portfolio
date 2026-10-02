@@ -9,7 +9,8 @@ Estructura: `src/app/core/` (config, interfaces y servicios HTTP de la API), `sr
 ## Comandos
 
 - Instalar: `pnpm install`
-- Ejecutar: `pnpm start` (dev) · `pnpm build` (producción); ambos pasan por `scripts/ng.mjs`, que toma `API_URL` del entorno o de `.env` (copiar `.env.example`) y, si no está, usa `https://api.figueroa-sanchez.com`. En Vercel: Project Settings → Environment Variables → `API_URL`.
+- Ejecutar: `pnpm start` (dev) · `pnpm build` (producción); ambos pasan por `scripts/ng.mjs`, que toma `API_URL` del entorno o de `.env` (copiar `.env.example`) y, si no está, usa `https://api.figueroa-sanchez.com`. En Vercel: Project Settings → Environment Variables → `API_URL`. En el CI: secret `API_URL` del repo, que `release.yaml` pasa al build y a la imagen.
+- Imagen Docker: `docker build --build-arg API_URL=<url> .` pone el origen de la API en el CSP `connect-src` de `nginx.conf` (placeholder `__API_ORIGIN__`); debe ser la misma URL usada en `pnpm build`. Sin el argumento, usa producción.
 - Tests: `pnpm test`
 - Lint/formato: `pnpm exec prettier --check .` (`--write` para corregir)
 
