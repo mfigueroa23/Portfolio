@@ -3,7 +3,9 @@
   <div class="absolute inset-0">
     <img src="/hero-bg.webp" alt="" class="w-full h-full object-cover opacity-40" />
   </div>
-  <div class="absolute inset-0 bg-linear-to-b from-background/20 via-background/80 to-background"></div>
+  <div
+    class="absolute inset-0 bg-linear-to-b from-background/20 via-background/80 to-background"
+  ></div>
 
   <!-- Green Dots -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -25,7 +27,9 @@
       <section class="space-y-8">
         <!-- Profile Badge -->
         <article class="animate-fade-in">
-          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass text-sm text-primary"
+          >
             <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
             Software Engineer ☦︎ SysAdmin ☦︎ DevOps
           </div>
@@ -33,32 +37,50 @@
 
         <!-- Headline -->
         <article class="space-y-5">
-          <h1 class="text-6xl md:text-7xl lg:text-[5rem] font-bold leading-[1.1] tracking-tight animate-fade-in animation-delay-100">
+          <h1
+            class="text-6xl md:text-7xl lg:text-[5rem] font-bold leading-[1.1] tracking-tight animate-fade-in animation-delay-100"
+          >
             Marco
-            <br>
+            <br />
             <span class="text-primary glow-text front-serif italic">Figueroa</span>
           </h1>
-          <div class="h-0.5 w-full my-1 rounded-full bg-linear-to-r from-primary to-transparent shadow-[0_0_12px_rgba(32,178,166,0.35)] animate-fade-in animation-delay-100"></div>
-          <p class="text-2xl md:text-3xl lg:text-[2.125rem] font-semibold leading-snug animate-fade-in animation-delay-200">
+          <div
+            class="h-0.5 w-full my-1 rounded-full bg-linear-to-r from-primary to-transparent shadow-[0_0_12px_rgba(32,178,166,0.35)] animate-fade-in animation-delay-100"
+          ></div>
+          <p
+            class="text-2xl md:text-3xl lg:text-[2.125rem] font-semibold leading-snug animate-fade-in animation-delay-200"
+          >
             Systems Thinking, <span class="text-primary glow-text">Clean Code</span> and
             <span class="font-serif italic font-normal text-white text-[1.1em]">Solutions.</span>
           </p>
           <p class="text-lg text-muted-foreground max-w-lg animate-fade-in animation-delay-200">
-            Full-stack developer working with Angular, Node.js, and Kubernetes. I build web apps and run the servers behind them.
+            Full-stack developer working with Angular, Node.js, and Kubernetes. I build web apps and
+            run the servers behind them.
           </p>
         </article>
 
         <!-- Call To Action Buttons -->
         <article class="flex flex-wrap gap-4 animate-fade-in animation-delay-300">
-          <app-button size="lg" href="/#contact">Contact Me <i class="fa-solid fa-angle-right"></i></app-button>
-          <app-animated-button href="/Marco-Figueroa-Resume.pdf">Download Resume <i class="fa-solid fa-download"></i></app-animated-button>
+          <app-button size="lg" href="/#contact"
+            >Contact Me <i class="fa-solid fa-angle-right"></i
+          ></app-button>
+          <app-animated-button href="/Marco-Figueroa-Resume.pdf"
+            >Download Resume <i class="fa-solid fa-download"></i
+          ></app-animated-button>
         </article>
 
         <!-- Social Links -->
         <article class="flex items-center gap-4 mb-10 animate-fade-in animation-delay-400">
           <p class="text-sm text-muted-foreground">Follow me:</p>
-          @for (link of socialLinks; track $index) {
-            <a href="{{link.href}}" target="_blank" class="text-xl p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all duration-300"><i class="{{link.icon}}"></i></a>
+          @for (link of socialLinks(); track $index) {
+            <a
+              href="{{ link.href }}"
+              target="_blank"
+              class="text-xl p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all duration-300"
+              ><i class="{{ link.icon }}"></i
+            ></a>
+          } @empty {
+            <p class="text-sm text-muted-foreground">Links coming soon.</p>
           }
         </article>
       </section>
@@ -67,10 +89,16 @@
       <section class="relative animate-fade-in animation-delay-300">
         <!-- Profile Image -->
         <article class="relative max-w-md mx-auto">
-          <div class="absolute inset-0 rounded-3xl bg-linear-to-br from-primary/30 via-transparent to-primary/10 blur-2xl animate-pulse"></div>
+          <div
+            class="absolute inset-0 rounded-3xl bg-linear-to-br from-primary/30 via-transparent to-primary/10 blur-2xl animate-pulse"
+          ></div>
           <section class="relative glass rounded-4xl p-2 glow-border">
             <!-- Image -->
-            <img src="/profile-photo.webp" alt="Marco Figueroa, full-stack developer" class="w-full aspect-4/5 object-cover rounded-3xl">
+            <img
+              src="/profile-photo.webp"
+              alt="Marco Figueroa, full-stack developer"
+              class="w-full aspect-4/5 object-cover rounded-3xl"
+            />
 
             <!-- Availability Badge -->
             <article class="absolute -bottom-4 -right-4 glass rounded-xl px-4 py-3 animate-float">
@@ -81,7 +109,9 @@
             </article>
 
             <!-- Experience Badge -->
-            <article class="absolute -top-4 -left-4 glass rounded-xl px-4 py-3 animate-float animation-delay-500">
+            <article
+              class="absolute -top-4 -left-4 glass rounded-xl px-4 py-3 animate-float animation-delay-500"
+            >
               <p class="text-2xl font-bold text-primary">3</p>
               <p class="text-xs text-muted-foreground">Years Exp.</p>
             </article>
@@ -93,21 +123,35 @@
     <!-- Skill Section -->
     <article class="mt-20 animate-fade-in animation-delay-600">
       <p class="text-sm text-muted-foreground mb-6 text-center">Technologies I work with</p>
-      <section class="relative overflow-hidden">
-        <article class="flex w-max animate-marquee">
-          @for (tech of techStack; track $index) {
-            <div class="shrink-0 px-8 py-4">
-              <p class="text-xl font-semibold text-muted-foreground/50 hover:text-muted-foreground transition-colors">{{tech}}</p>
-            </div>
-          }
-        </article>
-      </section>
+      @if (techStack().length) {
+        <section class="relative overflow-hidden">
+          <article class="flex w-max animate-marquee">
+            @for (tech of techStack(); track $index) {
+              <div class="shrink-0 px-8 py-4">
+                <p
+                  class="text-xl font-semibold text-muted-foreground/50 hover:text-muted-foreground transition-colors"
+                >
+                  {{ tech.name }}
+                </p>
+              </div>
+            }
+          </article>
+        </section>
+      } @else {
+        <!-- Empty State -->
+        <p class="text-xl font-semibold text-muted-foreground/50 text-center py-4">
+          Technologies coming soon.
+        </p>
+      }
     </article>
   </section>
 
   <!-- Scroll Indicator -->
   <section class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-fade-in animation-delay-800">
-    <a href="#about" class="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group">
+    <a
+      href="#about"
+      class="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
+    >
       <p class="text-xs uppercase tracking-wider">Scroll</p>
       <i class="fa-solid fa-angles-down w-6 h-6 animate-bounce"></i>
     </a>

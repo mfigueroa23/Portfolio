@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Highlight } from '../../core/interfaces/content';
+import { ContentService } from '../../core/services/content.service';
 
 @Component({
   imports: [],
@@ -7,26 +9,5 @@ import { Component } from '@angular/core';
   templateUrl: './about.html',
 })
 export class About {
-  public highlights: { icon: string; title: string; description: string }[] = [
-    {
-      icon: 'fa-solid fa-code',
-      title: 'Clean Code',
-      description: 'Writing maintainable, scalable code that is easy to read and evolve.',
-    },
-    {
-      icon: 'fa-solid fa-server',
-      title: 'Reliable Systems',
-      description: 'Operating critical Linux and Windows services with a focus on uptime.',
-    },
-    {
-      icon: 'fa-solid fa-rocket',
-      title: 'DevOps',
-      description: 'Automating builds and deployments with CI/CD, Docker and Kubernetes.',
-    },
-    {
-      icon: 'fa-solid fa-users',
-      title: 'Collaboration',
-      description: 'Working with agile teams under Scrum to ship value iteratively.',
-    },
-  ];
+  public readonly highlights = inject(ContentService).collection<Highlight>('highlights');
 }

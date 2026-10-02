@@ -1,21 +1,53 @@
+import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ContentService } from '../../core/services/content.service';
+import { Project } from '../../core/interfaces/content';
 import { Projects } from './projects';
 
 describe('Projects', () => {
-  let component: Projects;
-  let fixture: ComponentFixture<Projects>;
+  const items: Project[] = [
+    {
+      id: 1,
+      position: 0,
+      title: 'Portfolio',
+      description: 'This site.',
+      image: '/projects/portfolio.webp',
+      tags: ['Angular', 'Tailwind'],
+      link: 'https://example.com',
+      github: 'https://example.com/repo',
+    },
+  ];
+  let collection: ReturnType<typeof vi.fn>;
 
-  beforeEach(async () => {
+  const render = async (data: Project[]): Promise<ComponentFixture<Projects>> => {
+    collection = vi.fn(() => signal(data));
     await TestBed.configureTestingModule({
       imports: [Projects],
+      providers: [{ provide: ContentService, useValue: { collection } }],
     }).compileComponents();
-
-    fixture = TestBed.createComponent(Projects);
-    component = fixture.componentInstance;
+    const fixture = TestBed.createComponent(Projects);
     await fixture.whenStable();
+    return fixture;
+  };
+
+  it('renders the projects from the API', async () => {
+    const fixture = await render(items);
+    const element: HTMLElement = fixture.nativeElement;
+
+    expect(collection).toHaveBeenCalledWith('projects');
+    expect(element.textContent).toContain('Portfolio');
+    expect(element.textContent).toContain('Tailwind');
+    expect(element.querySelector('img[alt="Portfolio"]')?.getAttribute('src')).toBe(
+      '/projects/portfolio.webp',
+    );
+    expect(element.textContent).not.toContain('Projects coming soon');
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('shows the empty state when there are no projects', async () => {
+    const fixture = await render([]);
+    const element: HTMLElement = fixture.nativeElement;
+
+    expect(element.textContent).toContain('Projects coming soon');
+    expect(element.querySelector('img')).toBeNull();
   });
 });

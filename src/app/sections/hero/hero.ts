@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Button } from '../../components/button/button';
 import { AnimatedButton } from '../../components/animated-button/animated-button';
+import { SocialLink, Technology } from '../../core/interfaces/content';
+import { ContentService } from '../../core/services/content.service';
 
 @Component({
   imports: [Button, AnimatedButton],
@@ -15,45 +17,9 @@ export class Hero {
     animation: `slow-drift ${15 + Math.random() * 30}s ease-in-out infinite`,
     animationDelay: `${Math.random() * 2}s`,
   }));
-  public socialLinks: { icon: string; href: string }[] = [
-    { icon: 'fa-brands fa-github', href: 'https://github.com/mfigueroa23' },
-    { icon: 'fa-brands fa-linkedin', href: 'https://www.linkedin.com/in/mfigueroa23' },
-    { icon: 'fa-brands fa-x-twitter', href: 'https://x.com/marcoo_f23' },
-    { icon: 'fa-brands fa-instagram', href: 'https://www.instagram.com/marcoo.f23' },
-    { icon: 'fa-brands fa-soundcloud', href: 'https://soundcloud.com/devsonic' },
-  ];
-  private technologies = [
-    'Angular',
-    'TypeScript',
-    'Node.js',
-    'NestJS',
-    'React',
-    'JavaScript',
-    'PostgreSQL',
-    'MySQL',
-    'Docker',
-    'Kubernetes',
-    'Linux',
-    'Bash',
-    'GitHub Actions',
-    'Git',
-    'Tailwind CSS',
-    'Nginx',
-    'Ubuntu Server',
-    'Cloudflare',
-    'Terraform',
-    'AWS',
-    'Vercel',
-    'Grafana',
-    'Python',
-    'Spring Boot',
-    '.NET',
-    'SQL Server',
-    'Windows Server',
-    'n8n',
-    'GitHub',
-    'Jira',
-    'Confluence',
-  ];
-  public techStack = [...this.technologies, ...this.technologies];
+  private readonly content = inject(ContentService);
+  public readonly socialLinks = this.content.collection<SocialLink>('social-links');
+  public readonly technologies = this.content.collection<Technology>('technologies');
+  // Rendered twice so the marquee animation loops without a visible gap.
+  public readonly techStack = computed(() => [...this.technologies(), ...this.technologies()]);
 }

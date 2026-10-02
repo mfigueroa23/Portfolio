@@ -1,14 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { AnimatedButton } from '../../components/animated-button/animated-button';
-
-interface Project {
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-  link: string;
-  github: string;
-}
+import { Project } from '../../core/interfaces/content';
+import { ContentService } from '../../core/services/content.service';
 
 @Component({
   imports: [AnimatedButton],
@@ -17,6 +10,5 @@ interface Project {
   templateUrl: './projects.html',
 })
 export class Projects {
-  // Add projects here, images go in /public/projects
-  public projects: Project[] = [];
+  public readonly projects = inject(ContentService).collection<Project>('projects');
 }

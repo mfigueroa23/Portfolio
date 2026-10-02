@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Button } from '../../components/button/button';
-
-const email = 'marco@figueroa-sanchez.com';
+import { ContactInfo } from '../../core/interfaces/content';
+import { ContactService } from '../../core/services/contact.service';
+import { ContentService } from '../../core/services/content.service';
 
 @Component({
   imports: [Button],
@@ -10,18 +11,13 @@ const email = 'marco@figueroa-sanchez.com';
   templateUrl: './contact.html',
 })
 export class Contact {
-  public contactInfo: { icon: string; label: string; value: string; href: string }[] = [
-    { icon: 'fa-solid fa-envelope', label: 'Email', value: email, href: `mailto:${email}` },
-    {
-      icon: 'fa-solid fa-location-dot',
-      label: 'Location',
-      value: 'Santiago, Chile',
-      href: '/#contact',
-    },
-  ];
+  private readonly contactService = inject(ContactService);
+  public readonly contactInfo = inject(ContentService).collection<ContactInfo>('contact-info');
   public readonly name = signal('');
   public readonly email = signal('');
   public readonly message = signal('');
+  // Honeypot: real visitors never see this field, so any value marks the submission as a bot.
+  public readonly website = signal('');
   public readonly isLoading = signal(false);
   public readonly status = signal<{ type: 'success' | 'error'; message: string } | null>(null);
   public async onSubmit(event: SubmitEvent): Promise<void> {
@@ -29,14 +25,13 @@ export class Contact {
     this.isLoading.set(true);
     this.status.set(null);
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'content-type': 'application/json' },
-        body: JSON.stringify({ name: this.name(), email: this.email(), message: this.message() }),
+      const result = await this.contactService.send({
+        name: this.name(),
+        email: this.email(),
+        message: this.message(),
+        website: this.website(),
       });
-      const result: { message?: string; error?: string } = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(result.error);
-      this.status.set({ type: 'success', message: result.message ?? 'Message sent successfully!' });
+      this.status.set({ type: 'success', message: result });
       this.name.set('');
       this.email.set('');
       this.message.set('');

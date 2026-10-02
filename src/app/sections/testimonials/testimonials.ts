@@ -1,11 +1,6 @@
-import { Component, computed, signal } from '@angular/core';
-
-interface Testimonial {
-  quote: string;
-  author: string;
-  role: string;
-  avatar: string;
-}
+import { Component, computed, inject, signal } from '@angular/core';
+import { Testimonial } from '../../core/interfaces/content';
+import { ContentService } from '../../core/services/content.service';
 
 @Component({
   imports: [],
@@ -14,16 +9,15 @@ interface Testimonial {
   templateUrl: './testimonials.html',
 })
 export class Testimonials {
-  // Add testimonials here
-  public testimonials: Testimonial[] = [];
+  public readonly testimonials = inject(ContentService).collection<Testimonial>('testimonials');
   public readonly activeIndex = signal(0);
-  public readonly active = computed(() => this.testimonials[this.activeIndex()]);
+  public readonly active = computed(() => this.testimonials()[this.activeIndex()]);
   public next = (): void => {
-    this.activeIndex.update((index) => (index + 1) % this.testimonials.length);
+    this.activeIndex.update((index) => (index + 1) % this.testimonials().length);
   };
   public previous = (): void => {
     this.activeIndex.update(
-      (index) => (index - 1 + this.testimonials.length) % this.testimonials.length,
+      (index) => (index - 1 + this.testimonials().length) % this.testimonials().length,
     );
   };
 }

@@ -29,6 +29,8 @@ jobs:
 
       - name: 'Build Application'
         run: 'pnpm run build'
+        env:
+          API_URL: ${{ secrets.API_URL }}
 
       - name: 'Upload Build'
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
@@ -75,6 +77,8 @@ jobs:
         with:
           context: .
           platforms: linux/amd64,linux/arm64
+          build-args: |
+            API_URL=${{ secrets.API_URL }}
           push: true
           tags: |
             ${{ vars.DOCKERHUB_USERNAME }}/portfolio:latest
