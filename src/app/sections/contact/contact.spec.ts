@@ -1,12 +1,35 @@
+import { signal, WritableSignal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ContactInfo } from '../../core/interfaces/content';
 import { ContactService } from '../../core/services/contact.service';
+import { ContentService } from '../../core/services/content.service';
 import { Contact } from './contact';
 
 describe('Contact', () => {
   let component: Contact;
   let fixture: ComponentFixture<Contact>;
   let send: ReturnType<typeof vi.fn>;
+  let collection: ReturnType<typeof vi.fn>;
+  let contactInfo: WritableSignal<ContactInfo[]>;
   let element: HTMLElement;
+  const infoItems: ContactInfo[] = [
+    {
+      id: 1,
+      position: 0,
+      icon: 'fa-solid fa-envelope',
+      label: 'Email',
+      value: 'someone@example.com',
+      href: 'mailto:someone@example.com',
+    },
+    {
+      id: 2,
+      position: 1,
+      icon: 'fa-solid fa-location-dot',
+      label: 'Location',
+      value: 'Somewhere',
+      href: '/#contact',
+    },
+  ];
 
   const type = (selector: string, value: string): void => {
     const field = element.querySelector<HTMLInputElement | HTMLTextAreaElement>(selector)!;
@@ -21,9 +44,14 @@ describe('Contact', () => {
 
   beforeEach(async () => {
     send = vi.fn();
+    contactInfo = signal(infoItems);
+    collection = vi.fn(() => contactInfo);
     await TestBed.configureTestingModule({
       imports: [Contact],
-      providers: [{ provide: ContactService, useValue: { send } }],
+      providers: [
+        { provide: ContactService, useValue: { send } },
+        { provide: ContentService, useValue: { collection } },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Contact);
@@ -103,6 +131,25 @@ describe('Contact', () => {
       const style = getComputedStyle(container);
       expect(style.position).toBe('absolute');
       expect(style.left).toBe('-9999px');
+    });
+  });
+
+  describe('contact info', () => {
+    it('renders the contact info items from the API', () => {
+      expect(collection).toHaveBeenCalledWith('contact-info');
+      const link = element.querySelector('a[href="mailto:someone@example.com"]');
+      expect(link?.textContent).toContain('Email');
+      expect(link?.textContent).toContain('someone@example.com');
+      expect(element.textContent).toContain('Somewhere');
+      expect(element.textContent).not.toContain('Contact details coming soon');
+    });
+
+    it('shows the empty state when there are no contact info items', async () => {
+      contactInfo.set([]);
+      await fixture.whenStable();
+
+      expect(element.textContent).toContain('Contact details coming soon');
+      expect(element.querySelector('a[href^="mailto:"]')).toBeNull();
     });
   });
 });

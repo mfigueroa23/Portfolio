@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { Button } from '../../components/button/button';
+import { ContactInfo } from '../../core/interfaces/content';
 import { ContactService } from '../../core/services/contact.service';
-
-const email = 'marco@figueroa-sanchez.com';
+import { ContentService } from '../../core/services/content.service';
 
 @Component({
   imports: [Button],
@@ -12,15 +12,7 @@ const email = 'marco@figueroa-sanchez.com';
 })
 export class Contact {
   private readonly contactService = inject(ContactService);
-  public contactInfo: { icon: string; label: string; value: string; href: string }[] = [
-    { icon: 'fa-solid fa-envelope', label: 'Email', value: email, href: `mailto:${email}` },
-    {
-      icon: 'fa-solid fa-location-dot',
-      label: 'Location',
-      value: 'Santiago, Chile',
-      href: '/#contact',
-    },
-  ];
+  public readonly contactInfo = inject(ContentService).collection<ContactInfo>('contact-info');
   public readonly name = signal('');
   public readonly email = signal('');
   public readonly message = signal('');

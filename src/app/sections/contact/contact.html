@@ -114,7 +114,7 @@
         <article class="glass rounded-3xl p-8">
           <h3 class="text-xl font-semibold mb-6">Contact Information</h3>
           <div class="space-y-4">
-            @for (item of contactInfo; track $index) {
+            @for (item of contactInfo(); track $index) {
               <a
                 href="{{ item.href }}"
                 class="flex items-center gap-4 p-4 rounded-xl hover:bg-surface transition-colors group"
@@ -129,6 +129,8 @@
                   <p class="font-medium">{{ item.value }}</p>
                 </div>
               </a>
+            } @empty {
+              <p class="text-sm text-muted-foreground">Contact details coming soon.</p>
             }
           </div>
         </article>
