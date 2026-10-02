@@ -9,7 +9,7 @@ Estructura: `src/app/core/` (config, interfaces y servicios HTTP de la API), `sr
 ## Comandos
 
 - Instalar: `pnpm install`
-- Ejecutar: `pnpm start` (dev) · `pnpm build` (producción)
+- Ejecutar: `pnpm start` (dev) · `pnpm build` (producción); ambos pasan por `scripts/ng.mjs`, que toma `API_URL` del entorno o de `.env` (copiar `.env.example`) y, si no está, usa `https://api.figueroa-sanchez.com`. En Vercel: Project Settings → Environment Variables → `API_URL`.
 - Tests: `pnpm test`
 - Lint/formato: `pnpm exec prettier --check .` (`--write` para corregir)
 

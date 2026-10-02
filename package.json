@@ -7,8 +7,8 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "node scripts/ng.mjs serve",
+    "build": "node scripts/ng.mjs build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
