@@ -3,8 +3,8 @@
 ## Proyecto
 
 Portafolio personal de Marco Figueroa (marco.figueroa-sanchez.com): SPA de una página con secciones (hero, about, experience, projects, testimonials, contact).
-Angular 22 standalone con SSR en modo estático (prerender de todas las rutas), Tailwind CSS v4 y una función serverless `api/contact.ts` que envía el formulario de contacto por email vía Brevo (`templates/contact-email.ts`).
-Estructura: `src/app/components/` (UI reutilizable), `src/app/sections/` (bloques de la home), `src/app/pages/` (rutas lazy), `public/` (assets estáticos).
+Angular 22 standalone con SSR en modo estático (prerender de todas las rutas) y Tailwind CSS v4. Sin código de servidor: el contenido del sitio y el formulario de contacto pasan por la API `https://api.figueroa-sanchez.com` (repo `api`); el prerender embebe el contenido y el navegador lo vuelve a pedir.
+Estructura: `src/app/core/` (config, interfaces y servicios HTTP de la API), `src/app/components/` (UI reutilizable), `src/app/sections/` (bloques de la home), `src/app/pages/` (rutas lazy), `public/` (assets estáticos).
 
 ## Comandos
 
@@ -26,7 +26,7 @@ Estructura: `src/app/components/` (UI reutilizable), `src/app/sections/` (bloque
 
 - Lee docs/constitution.md y la spec activa (`docs/specs/NNN-*/spec.md`) antes de tocar código.
 - No añadir dependencias, ni cambiar a SSR dinámico, ni tocar `angular.json`/budgets sin preguntar.
-- No exponer secretos: `BREVO_API_KEY` solo en entorno del servidor; nunca en `src/`.
+- No exponer secretos: la web no maneja secretos (viven en la API); nunca en `src/` ni en el repo.
 - No modificar contenido personal (experiencia, CV en `public/`, datos de contacto) sin indicación explícita.
 
 ## Al terminar cualquier tarea
